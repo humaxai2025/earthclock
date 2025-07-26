@@ -16,8 +16,6 @@
     }
   ],
   "env": {
-    "VITE_NOAA_API_KEY": "@noaa_api_key",
-    "VITE_NASA_API_KEY": "@nasa_api_key",
-    "VITE_IEA_API_KEY": "@iea_api_key"
+     
   }
 }
