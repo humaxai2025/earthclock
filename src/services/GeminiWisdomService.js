@@ -69,7 +69,7 @@ class GeminiWisdomService {
             generatedTips = this.parseTipsFromResponse(content);
             
             // Success if we get at least 5 good AI tips
-            if (generatedTips.length >= 5) {
+            if (generatedTips.length >= 2) {
               console.log(`✅ AI Success! Generated ${generatedTips.length} contextual tips on attempt ${attempt}`);
               break;
             } else {
