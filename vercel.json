@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_NOAA_API_KEY": "@noaa_api_key",
+    "VITE_NASA_API_KEY": "@nasa_api_key",
+    "VITE_IEA_API_KEY": "@iea_api_key"
+  }
+}
