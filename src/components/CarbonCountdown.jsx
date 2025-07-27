@@ -79,7 +79,7 @@ const CarbonCountdown = ({ isDarkMode }) => {
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center">
           <Clock className="w-3 h-3 text-orange-400 animate-pulse mr-1" />
-          <span className="text-xs font-semibold text-orange-400">Climate Deadline</span>
+          <span className={`text-xs font-semibold text-orange-400`}>Climate Deadline</span>
         </div>
         <div className="w-2 h-2 rounded-full bg-orange-400 animate-ping" />
       </div>
@@ -88,27 +88,27 @@ const CarbonCountdown = ({ isDarkMode }) => {
       <div className="mb-2">
         <div className="flex items-center justify-center space-x-2 text-center">
           <div>
-            <div className={`text-lg font-bold font-mono ${isDarkMode ? 'text-orange-300' : 'text-orange-600'}`} 
+            <div className={`text-lg font-bold font-mono ${isDarkMode ? 'text-orange-200' : 'text-orange-800'}`} 
                  style={{textShadow: '0 0 8px rgba(251, 146, 60, 0.6)'}}>
               {formatTimeUnit(timeRemaining.years)}
             </div>
-            <div className="text-xs opacity-80">Y</div>
+            <div className={`text-xs ${isDarkMode ? 'text-orange-300' : 'text-orange-700'}`}>Y</div>
           </div>
           <div className="text-orange-400 font-bold animate-pulse">:</div>
           <div>
-            <div className={`text-lg font-bold font-mono ${isDarkMode ? 'text-orange-300' : 'text-orange-600'}`}
+            <div className={`text-lg font-bold font-mono ${isDarkMode ? 'text-orange-200' : 'text-orange-800'}`}
                  style={{textShadow: '0 0 8px rgba(251, 146, 60, 0.6)'}}>
               {formatTimeUnit(timeRemaining.days)}
             </div>
-            <div className="text-xs opacity-80">D</div>
+            <div className={`text-xs ${isDarkMode ? 'text-orange-300' : 'text-orange-700'}`}>D</div>
           </div>
           <div className="text-orange-400 font-bold animate-pulse">:</div>
           <div>
-            <div className={`text-sm font-bold font-mono ${isDarkMode ? 'text-orange-400' : 'text-orange-500'}`}
+            <div className={`text-sm font-bold font-mono ${isDarkMode ? 'text-orange-200' : 'text-orange-800'}`}
                  style={{animation: timeRemaining.seconds % 2 === 0 ? 'pulse 1s ease-in-out' : 'none'}}>
               {formatTimeUnit(timeRemaining.hours)}:{formatTimeUnit(timeRemaining.minutes)}:{formatTimeUnit(timeRemaining.seconds)}
             </div>
-            <div className="text-xs opacity-70">H:M:S</div>
+            <div className={`text-xs ${isDarkMode ? 'text-orange-300' : 'text-orange-700'}`}>H:M:S</div>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ const CarbonCountdown = ({ isDarkMode }) => {
         </div>
         <div className="flex items-center text-orange-500">
           <div className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse mr-1" />
-          <span>LIVE</span>
+          <span className={`${isDarkMode ? 'text-orange-200' : 'text-orange-800'}`}>LIVE</span>
         </div>
       </div>
     </div>
