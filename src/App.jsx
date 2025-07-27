@@ -6,6 +6,7 @@ import Header from './components/Header';
 import TimeDisplay from './components/TimeDisplay';
 import EarthVisualization from './components/EarthVisualization';
 import ClimateUrgencyMeter from './components/ClimateUrgencyMeter';
+import CarbonCountdown from './components/CarbonCountdown';
 import EnvironmentalDataGrid from './components/EnvironmentalDataGrid';
 import ClimateIntelligence from './components/ClimateIntelligence';
 import EcoTip from './components/EcoTip';
@@ -302,6 +303,7 @@ function App() {
               />
               <ClimateUrgencyMeter isDarkMode={isDarkMode} />
             </div>
+            <CarbonCountdown isDarkMode={isDarkMode} />
           </div>
 
           {/* Center Column - Environmental Data */}
