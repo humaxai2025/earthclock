@@ -17,9 +17,6 @@ import CarbonBudgetModal from './components/CarbonBudgetModal';
 import TippingPointsModal from './components/TippingPointsModal';
 import PersonalCarbonCalculator from './components/PersonalCarbonCalculator';
 
-// Import AI Wisdom Service
-import GeminiWisdomService from './services/GeminiWisdomService';
-
 function App() {
   // State management
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -77,11 +74,7 @@ function App() {
     dataMonth: 'July 2025'
   });
 
-  // Eco tips - now powered by AI
-  const [dailyTip, setDailyTip] = useState("🌍 Loading Earth wisdom...");
-  const [isLoadingTip, setIsLoadingTip] = useState(false);
-
-  // Effects for UI animations and AI-powered tips
+  // Effects for UI animations
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     const hour = new Date().getHours();
@@ -92,57 +85,11 @@ function App() {
       setTimeout(() => setPulseAnimation(false), 1000);
     }, 5000);
 
-    // Initialize AI wisdom tips
-    initializeAITips();
-
-    // Set up tip rotation every 8 seconds
-    const tipTimer = setInterval(() => {
-      rotateToNextTip();
-    }, 8000);
-
-    // Expose debug functions globally for easy testing (development only)
-    if (import.meta.env.DEV) {
-      window.showAIStats = showAIStats;
-      window.debugAI = debugAI;
-      window.refreshAITips = handleRefreshAITips;
-    }
-
     return () => {
       clearInterval(timer);
       clearInterval(pulseTimer);
-      clearInterval(tipTimer);
     };
   }, []);
-
-  // Initialize AI tips on mount and get first tip
-  const initializeAITips = async () => {
-    try {
-      setIsLoadingTip(true);
-      const firstTip = await GeminiWisdomService.getCurrentTip(environmentalData);
-      setDailyTip(firstTip);
-      
-      // Log AI service stats for debugging
-      const stats = GeminiWisdomService.getStats();
-      console.log('🤖 AI Wisdom Service initialized:', stats);
-      
-    } catch (error) {
-      console.error('Failed to initialize AI tips:', error);
-      setDailyTip("🌱 Every small action creates ripples of positive change");
-    } finally {
-      setIsLoadingTip(false);
-    }
-  };
-
-  // Rotate to next AI-generated tip
-  const rotateToNextTip = async () => {
-    try {
-      const nextTip = await GeminiWisdomService.getCurrentTip(environmentalData);
-      setDailyTip(nextTip);
-    } catch (error) {
-      console.error('Failed to get next AI tip:', error);
-      // Keep current tip on error
-    }
-  };
 
   // Helper functions
   const getStatusColor = (value, type) => {
@@ -210,42 +157,6 @@ function App() {
 
   const closeTippingPointsModal = () => {
     setShowTippingPointsModal(false);
-  };
-
-  // AI Wisdom debug functions (useful for testing)
-  const handleRefreshAITips = async () => {
-    try {
-      setIsLoadingTip(true);
-      const refreshedTip = await GeminiWisdomService.forceRefresh(environmentalData);
-      setDailyTip(refreshedTip);
-      
-      const stats = GeminiWisdomService.getStats();
-      console.log('🔄 AI Tips refreshed:', stats);
-    } catch (error) {
-      console.error('Failed to refresh AI tips:', error);
-    } finally {
-      setIsLoadingTip(false);
-    }
-  };
-
-  // Debug: Show AI service stats (only in development)
-  const showAIStats = () => {
-    const stats = GeminiWisdomService.getStats();
-    console.table(stats);
-    alert(`AI Wisdom Stats:\n\nMode: ${stats.mode}\nTotal Tips: ${stats.totalTips}\nCurrent Index: ${stats.currentIndex}\nLast Fetch: ${stats.lastFetchDate}\nUsing AI: ${stats.isUsingAI ? 'Yes' : 'No'}\nHas API Key: ${stats.hasApiKey ? 'Yes' : 'No'}\nEmergency Mode: ${stats.isUsingEmergencyMode ? 'Yes' : 'No'}\n\nSample Tips:\n${stats.tipsSample?.join('\n') || 'None'}`);
-  };
-
-  // Debug: Test AI API directly
-  const debugAI = async () => {
-    console.log('🔍 Testing AI API directly...');
-    const result = await GeminiWisdomService.debugAPI(environmentalData);
-    console.log('🔍 Debug result:', result);
-    
-    if (result.success) {
-      alert(`AI Debug Success!\n\nGenerated ${result.tipCount} tips\n\nFirst tip: ${result.parsedTips[0] || 'None'}\n\nCheck console for full details.`);
-    } else {
-      alert(`AI Debug Failed:\n\n${result.error}\n\nCheck console for details.`);
-    }
   };
 
   const shareToSocial = (platform, customMessage = null) => {
@@ -369,12 +280,9 @@ function App() {
           isDarkMode ? 'bg-blue-900/20 border-blue-500/30 text-blue-300' : 'bg-blue-100/50 border-blue-200/50 text-blue-700'
         }`}>
           <div className="flex items-center justify-center space-x-2 text-sm">
-            
             <span className="font-medium">
               📊 Environmental data from {environmentalData.dataMonth}
             </span>
-            
-            
           </div>
         </div>
 
@@ -414,11 +322,7 @@ function App() {
 
         {/* Bottom Section */}
         <div className="mt-6 space-y-4">
-          <EcoTip 
-            dailyTip={dailyTip} 
-            isDarkMode={isDarkMode} 
-            isLoading={isLoadingTip}
-          />
+          <EcoTip isDarkMode={isDarkMode} />
           <ActionCards 
             isDarkMode={isDarkMode} 
             onCarbonBudgetClick={handleCarbonBudgetClick}
