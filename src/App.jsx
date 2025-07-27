@@ -295,7 +295,10 @@ function App() {
               pulseAnimation={pulseAnimation}
               isDarkMode={isDarkMode}
             />
-            <EarthVisualization isDarkMode={isDarkMode} />
+            <EarthVisualization 
+              isDarkMode={isDarkMode} 
+              urgencyLevel="critical" 
+            />
             <ClimateUrgencyMeter isDarkMode={isDarkMode} />
           </div>
 
