@@ -267,7 +267,7 @@ function App() {
         } animate-pulse`} style={{animationDuration: '5s', animationDelay: '1s'}} />
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-6 h-screen flex flex-col">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-4 sm:py-6 min-h-screen flex flex-col max-w-7xl">
         {/* Header */}
         <Header 
           isDarkMode={isDarkMode}
@@ -276,34 +276,36 @@ function App() {
         />
 
         {/* Data Update Status Banner */}
-        <div className={`mb-4 px-4 py-2 rounded-lg backdrop-blur-lg border transition-all duration-300 ${
+        <div className={`mb-3 sm:mb-4 px-3 sm:px-4 py-2 rounded-lg backdrop-blur-lg border transition-all duration-300 ${
           isDarkMode ? 'bg-blue-900/20 border-blue-500/30 text-blue-300' : 'bg-blue-100/50 border-blue-200/50 text-blue-700'
         }`}>
-          <div className="flex items-center justify-center space-x-2 text-sm">
-            <span className="font-medium">
+          <div className="flex items-center justify-center space-x-2 text-xs sm:text-sm">
+            <span className="font-medium text-center">
               📊 Environmental data from {environmentalData.dataMonth}
             </span>
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-6 flex-1 min-h-0">
-          {/* Left Column */}
-          <div className="lg:col-span-1 flex flex-col space-y-4">
+        {/* Main Content Grid - Responsive Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 flex-1 min-h-0">
+          {/* Left Column - Time & Earth */}
+          <div className="md:col-span-1 xl:col-span-1 flex flex-col space-y-3 sm:space-y-4">
             <TimeDisplay 
               currentTime={currentTime}
               pulseAnimation={pulseAnimation}
               isDarkMode={isDarkMode}
             />
-            <EarthVisualization 
-              isDarkMode={isDarkMode} 
-              urgencyLevel="critical" 
-            />
-            <ClimateUrgencyMeter isDarkMode={isDarkMode} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-3 sm:gap-4">
+              <EarthVisualization 
+                isDarkMode={isDarkMode} 
+                urgencyLevel="critical" 
+              />
+              <ClimateUrgencyMeter isDarkMode={isDarkMode} />
+            </div>
           </div>
 
-          {/* Center Column */}
-          <div className="lg:col-span-1">
+          {/* Center Column - Environmental Data */}
+          <div className="md:col-span-1 xl:col-span-1">
             <EnvironmentalDataGrid 
               environmentalData={environmentalData}
               getStatusColor={getStatusColor}
@@ -314,8 +316,8 @@ function App() {
             />
           </div>
 
-          {/* Right Column */}
-          <div className="lg:col-span-1">
+          {/* Right Column - Climate Intelligence */}
+          <div className="md:col-span-2 xl:col-span-1">
             <ClimateIntelligence 
               isDarkMode={isDarkMode}
               environmentalData={environmentalData}
@@ -323,8 +325,8 @@ function App() {
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="mt-6 space-y-4">
+        {/* Bottom Section - Responsive Layout */}
+        <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
           <EcoTip isDarkMode={isDarkMode} />
           <ActionCards 
             isDarkMode={isDarkMode} 
