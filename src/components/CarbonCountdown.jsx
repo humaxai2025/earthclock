@@ -76,76 +76,63 @@ const CarbonCountdown = ({ isDarkMode }) => {
       isDarkMode ? 'bg-orange-900/30 border-orange-500/30' : 'bg-orange-50/80 border-orange-200/50'
     }`}>
       {/* Header */}
-      <h4 className="text-xs font-semibold mb-2 text-orange-400 flex items-center">
-        <Clock className="animate-pulse text-sm mr-1" />
-        <span className="ml-1">Carbon Budget</span>
-        <div className="ml-auto w-2 h-2 rounded-full bg-orange-400 animate-ping" />
-      </h4>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center">
+          <Clock className="w-4 h-4 text-orange-400 animate-pulse mr-2" />
+          <span className="text-xs font-semibold text-orange-400">Climate Deadline</span>
+        </div>
+        <div className="w-2 h-2 rounded-full bg-orange-400 animate-ping" />
+      </div>
 
-      {/* Main Countdown Display - Compact */}
-      <div className="mb-2">
-        <div className="flex items-center justify-center space-x-3 mb-2">
+      {/* Main Countdown Display - Fixed Layout */}
+      <div className="mb-3">
+        <div className="flex items-center justify-center space-x-4 mb-3">
           {/* Years */}
-          <div className="text-center">
-            <div className={`text-xl font-bold font-mono leading-none transition-all duration-300 ${
+          <div className="text-center flex-shrink-0">
+            <div className={`text-lg font-bold font-mono mb-1 glow-text ${
               isDarkMode ? 'text-orange-300' : 'text-orange-600'
-            }`} style={{
-              textShadow: '0 0 10px rgba(251, 146, 60, 0.5)',
-              animation: 'glow 2s ease-in-out infinite alternate'
-            }}>
+            }`}>
               {formatTimeUnit(timeRemaining.years)}
             </div>
-            <div className="text-xs opacity-70 font-medium">YRS</div>
+            <div className="text-xs font-medium opacity-80">YEARS</div>
           </div>
 
           {/* Separator */}
-          <div className="text-orange-400 font-bold animate-pulse">:</div>
+          <div className="text-orange-400 font-bold text-lg animate-pulse">:</div>
 
           {/* Days */}
-          <div className="text-center">
-            <div className={`text-xl font-bold font-mono leading-none transition-all duration-300 ${
+          <div className="text-center flex-shrink-0">
+            <div className={`text-lg font-bold font-mono mb-1 glow-text ${
               isDarkMode ? 'text-orange-300' : 'text-orange-600'
-            }`} style={{
-              textShadow: '0 0 10px rgba(251, 146, 60, 0.5)',
-              animation: 'glow 2s ease-in-out infinite alternate'
-            }}>
+            }`}>
               {formatTimeUnit(timeRemaining.days)}
             </div>
-            <div className="text-xs opacity-70 font-medium">DAYS</div>
+            <div className="text-xs font-medium opacity-80">DAYS</div>
           </div>
+        </div>
 
-          {/* Separator */}
-          <div className="text-orange-400 font-bold animate-pulse">:</div>
-
-          {/* Hours:Minutes:Seconds - Compact */}
-          <div className="text-center">
-            <div className={`text-sm font-bold font-mono leading-none transition-all duration-300 ${
-              isDarkMode ? 'text-orange-400' : 'text-orange-500'
-            }`} style={{
-              textShadow: '0 0 8px rgba(251, 146, 60, 0.3)',
-              animation: timeRemaining.seconds % 2 === 0 ? 'pulse 1s ease-in-out' : 'none'
-            }}>
-              {formatTimeUnit(timeRemaining.hours)}:{formatTimeUnit(timeRemaining.minutes)}:{formatTimeUnit(timeRemaining.seconds)}
-            </div>
-            <div className="text-xs opacity-70 font-medium">H:M:S</div>
+        {/* Hours:Minutes:Seconds - Secondary Row */}
+        <div className="text-center">
+          <div className={`text-sm font-bold font-mono mb-1 live-pulse ${
+            isDarkMode ? 'text-orange-400' : 'text-orange-500'
+          }`}>
+            {formatTimeUnit(timeRemaining.hours)}:{formatTimeUnit(timeRemaining.minutes)}:{formatTimeUnit(timeRemaining.seconds)}
           </div>
+          <div className="text-xs font-medium opacity-70">HOURS : MINUTES : SECONDS</div>
         </div>
       </div>
 
       {/* Compact Progress Bar */}
-      <div className="mb-2">
-        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 h-1.5 rounded-full relative transition-all duration-1000" 
-               style={{
-                 width: `${carbonBudgetData.budgetUsedPercent}%`,
-                 animation: 'slideIn 2s ease-out, glow 3s ease-in-out infinite alternate'
-               }}>
+      <div className="mb-3">
+        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full relative progress-bar" 
+               style={{ width: `${carbonBudgetData.budgetUsedPercent}%` }}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-ping" />
           </div>
         </div>
       </div>
 
-      {/* Compact Bottom Info */}
+      {/* Bottom Status */}
       <div className="flex items-center justify-between text-xs">
         <div className="flex items-center text-orange-400">
           <TrendingDown className="w-3 h-3 mr-1 animate-bounce" />
@@ -157,16 +144,29 @@ const CarbonCountdown = ({ isDarkMode }) => {
         </div>
       </div>
 
-      {/* Enhanced CSS Animations */}
+      {/* CSS Styles */}
       <style jsx>{`
+        .glow-text {
+          text-shadow: 0 0 8px rgba(251, 146, 60, 0.6);
+          animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .live-pulse {
+          animation: ${timeRemaining.seconds % 2 === 0 ? 'pulse 1s ease-in-out' : 'none'};
+        }
+        
+        .progress-bar {
+          animation: slideIn 2s ease-out;
+        }
+        
         @keyframes glow {
           0% { 
-            text-shadow: 0 0 5px rgba(251, 146, 60, 0.5);
+            text-shadow: 0 0 5px rgba(251, 146, 60, 0.4);
             transform: scale(1);
           }
           100% { 
-            text-shadow: 0 0 15px rgba(251, 146, 60, 0.8), 0 0 25px rgba(251, 146, 60, 0.6);
-            transform: scale(1.05);
+            text-shadow: 0 0 12px rgba(251, 146, 60, 0.8);
+            transform: scale(1.02);
           }
         }
         
