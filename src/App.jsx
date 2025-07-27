@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
 
 // Import all components
@@ -375,6 +376,8 @@ function App() {
         onClose={closeTippingPointsModal}
         isDarkMode={isDarkMode}
       />
+      {/* Vercel Analytics */}
+      <Analytics />
 
       {/* CSS Animations */}
       <style jsx>{`
@@ -444,6 +447,7 @@ function App() {
           animation: slide-in-from-bottom-8 0.7s ease-out;
         }
       `}</style>
+    
     </div>
   );
 }
