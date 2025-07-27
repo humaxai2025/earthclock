@@ -14,7 +14,6 @@ const CarbonCountdown = ({ isDarkMode }) => {
   const carbonBudgetData = {
     remainingGt: 300, // Remaining carbon budget in Gt CO₂
     currentEmissions: 42.0, // Current annual emissions in Gt CO₂/year
-    targetDate: new Date('2031-12-31T23:59:59'), // Approximate date when budget exhausted
     budgetUsedPercent: 83 // Percentage of original budget already used
   };
 
@@ -68,94 +67,119 @@ const CarbonCountdown = ({ isDarkMode }) => {
     return () => clearInterval(timer);
   }, []);
 
-  const formatTimeUnit = (value, unit) => {
-    const paddedValue = value.toString().padStart(2, '0');
-    return { value: paddedValue, unit };
+  const formatTimeUnit = (value) => {
+    return value.toString().padStart(2, '0');
   };
 
   return (
-    <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl backdrop-blur-xl shadow-xl border transition-all duration-300 hover:scale-105 ${
+    <div className={`p-3 rounded-xl backdrop-blur-xl shadow-xl border transition-all duration-300 hover:scale-105 ${
       isDarkMode ? 'bg-orange-900/30 border-orange-500/30' : 'bg-orange-50/80 border-orange-200/50'
     }`}>
-      <h4 className="text-xs sm:text-sm font-semibold mb-2 text-orange-400 flex items-center">
-        <Clock className="animate-pulse text-sm sm:text-base mr-1" />
+      {/* Header */}
+      <h4 className="text-xs font-semibold mb-2 text-orange-400 flex items-center">
+        <Clock className="animate-pulse text-sm mr-1" />
         <span className="ml-1">Carbon Budget</span>
-        <div className="ml-auto flex space-x-1">
-          <div className="w-1 h-1 rounded-full bg-orange-400 animate-ping" />
-          <div className="w-1 h-1 rounded-full bg-orange-400 animate-ping" style={{animationDelay: '0.3s'}} />
-          <div className="w-1 h-1 rounded-full bg-orange-400 animate-ping" style={{animationDelay: '0.6s'}} />
-        </div>
+        <div className="ml-auto w-2 h-2 rounded-full bg-orange-400 animate-ping" />
       </h4>
 
-      {/* Countdown Display */}
-      <div className="mb-3">
-        <div className="grid grid-cols-2 gap-2 mb-2">
-          <div className="text-center">
-            <div className="text-lg sm:text-xl font-bold font-mono text-orange-400">
-              {formatTimeUnit(timeRemaining.years, 'Y').value}
-            </div>
-            <div className="text-xs opacity-70">Years</div>
-          </div>
-          <div className="text-center">
-            <div className="text-lg sm:text-xl font-bold font-mono text-orange-400">
-              {formatTimeUnit(timeRemaining.days, 'D').value}
-            </div>
-            <div className="text-xs opacity-70">Days</div>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-3 gap-1">
-          <div className="text-center">
-            <div className="text-sm sm:text-base font-bold font-mono text-orange-300">
-              {formatTimeUnit(timeRemaining.hours, 'H').value}
-            </div>
-            <div className="text-xs opacity-60">H</div>
-          </div>
-          <div className="text-center">
-            <div className="text-sm sm:text-base font-bold font-mono text-orange-300">
-              {formatTimeUnit(timeRemaining.minutes, 'M').value}
-            </div>
-            <div className="text-xs opacity-60">M</div>
-          </div>
-          <div className="text-center">
-            <div className="text-sm sm:text-base font-bold font-mono text-orange-300 animate-pulse">
-              {formatTimeUnit(timeRemaining.seconds, 'S').value}
-            </div>
-            <div className="text-xs opacity-60">S</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Progress Bar */}
+      {/* Main Countdown Display - Compact */}
       <div className="mb-2">
-        <div className="flex justify-between text-xs mb-1 opacity-80">
-          <span>Budget Used</span>
-          <span className="font-medium">{carbonBudgetData.budgetUsedPercent}%</span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full relative animate-pulse" 
-               style={{width: `${carbonBudgetData.budgetUsedPercent}%`}}>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-ping" />
+        <div className="flex items-center justify-center space-x-3 mb-2">
+          {/* Years */}
+          <div className="text-center">
+            <div className={`text-xl font-bold font-mono leading-none transition-all duration-300 ${
+              isDarkMode ? 'text-orange-300' : 'text-orange-600'
+            }`} style={{
+              textShadow: '0 0 10px rgba(251, 146, 60, 0.5)',
+              animation: 'glow 2s ease-in-out infinite alternate'
+            }}>
+              {formatTimeUnit(timeRemaining.years)}
+            </div>
+            <div className="text-xs opacity-70 font-medium">YRS</div>
+          </div>
+
+          {/* Separator */}
+          <div className="text-orange-400 font-bold animate-pulse">:</div>
+
+          {/* Days */}
+          <div className="text-center">
+            <div className={`text-xl font-bold font-mono leading-none transition-all duration-300 ${
+              isDarkMode ? 'text-orange-300' : 'text-orange-600'
+            }`} style={{
+              textShadow: '0 0 10px rgba(251, 146, 60, 0.5)',
+              animation: 'glow 2s ease-in-out infinite alternate'
+            }}>
+              {formatTimeUnit(timeRemaining.days)}
+            </div>
+            <div className="text-xs opacity-70 font-medium">DAYS</div>
+          </div>
+
+          {/* Separator */}
+          <div className="text-orange-400 font-bold animate-pulse">:</div>
+
+          {/* Hours:Minutes:Seconds - Compact */}
+          <div className="text-center">
+            <div className={`text-sm font-bold font-mono leading-none transition-all duration-300 ${
+              isDarkMode ? 'text-orange-400' : 'text-orange-500'
+            }`} style={{
+              textShadow: '0 0 8px rgba(251, 146, 60, 0.3)',
+              animation: timeRemaining.seconds % 2 === 0 ? 'pulse 1s ease-in-out' : 'none'
+            }}>
+              {formatTimeUnit(timeRemaining.hours)}:{formatTimeUnit(timeRemaining.minutes)}:{formatTimeUnit(timeRemaining.seconds)}
+            </div>
+            <div className="text-xs opacity-70 font-medium">H:M:S</div>
           </div>
         </div>
       </div>
 
-      {/* Status Message */}
+      {/* Compact Progress Bar */}
+      <div className="mb-2">
+        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+          <div className="bg-gradient-to-r from-orange-500 to-red-500 h-1.5 rounded-full relative transition-all duration-1000" 
+               style={{
+                 width: `${carbonBudgetData.budgetUsedPercent}%`,
+                 animation: 'slideIn 2s ease-out, glow 3s ease-in-out infinite alternate'
+               }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-ping" />
+          </div>
+        </div>
+      </div>
+
+      {/* Compact Bottom Info */}
       <div className="flex items-center justify-between text-xs">
         <div className="flex items-center text-orange-400">
-          <TrendingDown className="w-3 h-3 mr-1" />
-          <span className="font-medium">Until 1.5°C limit</span>
+          <TrendingDown className="w-3 h-3 mr-1 animate-bounce" />
+          <span className="font-medium">{carbonBudgetData.budgetUsedPercent}% used</span>
         </div>
         <div className="flex items-center text-orange-500">
-          <AlertTriangle className="w-3 h-3 mr-1" />
-          <span className="font-medium">Live</span>
+          <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse mr-1" />
+          <span className="font-medium">LIVE</span>
         </div>
       </div>
 
-      {/* Bottom text */}
-      <div className="text-xs text-center mt-2 opacity-60">
-        {carbonBudgetData.remainingGt} Gt CO₂ remaining
-      </div>
+      {/* Enhanced CSS Animations */}
+      <style jsx>{`
+        @keyframes glow {
+          0% { 
+            text-shadow: 0 0 5px rgba(251, 146, 60, 0.5);
+            transform: scale(1);
+          }
+          100% { 
+            text-shadow: 0 0 15px rgba(251, 146, 60, 0.8), 0 0 25px rgba(251, 146, 60, 0.6);
+            transform: scale(1.05);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+        
+        @keyframes slideIn {
+          from { width: 0%; }
+          to { width: ${carbonBudgetData.budgetUsedPercent}%; }
+        }
+      `}</style>
     </div>
   );
 };
