@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Car, Leaf, Zap, TrendingDown, TrendingUp, X, Home, ShoppingBag, Plane, Bus, Target, Award } from 'lucide-react';
+import {
+  Calculator,
+  Car,
+  Leaf,
+  Zap,
+  TrendingDown,
+  TrendingUp,
+  X,
+  Home,
+  ShoppingBag,
+  Plane,
+  Bus,
+  Target,
+  Award,
+} from 'lucide-react';
 
 // Simple card component that opens the calculator modal
-const PersonalCarbonCalculator = ({ isDarkMode, cardType = "daily", onCalculatorClick }) => {
+const PersonalCarbonCalculator = ({ isDarkMode, cardType = 'daily', onCalculatorClick }) => {
   const getCardClasses = (type, isDark) => {
     const cardStyles = {
       daily: {
-        container: isDark 
-          ? 'bg-gradient-to-br from-blue-900/40 to-cyan-900/40 border-blue-500/30 text-blue-100' 
+        container: isDark
+          ? 'bg-gradient-to-br from-blue-900/40 to-cyan-900/40 border-blue-500/30 text-blue-100'
           : 'bg-gradient-to-br from-blue-50/80 to-cyan-50/80 border-blue-200/50 text-blue-800',
         dot: 'bg-blue-400',
-        accent: 'text-blue-400'
-      }
+        accent: 'text-blue-400',
+      },
     };
     return cardStyles[type];
   };
@@ -19,7 +33,7 @@ const PersonalCarbonCalculator = ({ isDarkMode, cardType = "daily", onCalculator
   const styles = getCardClasses(cardType, isDarkMode);
 
   return (
-    <div 
+    <div
       className={`p-4 rounded-xl backdrop-blur-xl shadow-lg border transition-all duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer ${styles.container}`}
       onClick={onCalculatorClick}
     >
@@ -29,20 +43,24 @@ const PersonalCarbonCalculator = ({ isDarkMode, cardType = "daily", onCalculator
         <div className={`ml-auto w-2 h-2 rounded-full ${styles.dot} animate-pulse`} />
         <span className="ml-1 text-xs opacity-60">▶</span>
       </h4>
-      
-      <div className={`text-2xl font-bold ${styles.accent} mb-1 group-hover:scale-110 transition-transform duration-300`}>
+
+      <div
+        className={`text-2xl font-bold ${styles.accent} mb-1 group-hover:scale-110 transition-transform duration-300`}
+      >
         Calculate
       </div>
-      
+
       <div className="text-sm opacity-80 mb-2">Complete carbon assessment</div>
-      
+
       <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-        <div className={`bg-gradient-to-r from-blue-400 to-blue-500 h-2 rounded-full transition-all duration-1000 relative`} 
-             style={{width: '60%', animation: 'slideIn 2.5s ease-out'}}>
+        <div
+          className={`bg-gradient-to-r from-blue-400 to-blue-500 h-2 rounded-full transition-all duration-1000 relative`}
+          style={{ width: '60%', animation: 'slideIn 2.5s ease-out' }}
+        >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-ping" />
         </div>
       </div>
-      
+
       <div className="text-xs text-center mt-2 opacity-50 group-hover:opacity-80 transition-opacity">
         Click for full assessment
       </div>
@@ -62,7 +80,7 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
   const [dairy, setDairy] = useState(3);
   const [shopping, setShopping] = useState(400);
   const [waste, setWaste] = useState(2);
-  
+
   // Results state
   const [currentAssessment, setCurrentAssessment] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
@@ -70,10 +88,10 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
   // Calculate carbon footprint using exact logic from index.html
   const calculateFootprint = () => {
     // Calculate carbon footprint (simplified calculation in kg CO2 per month)
-    const transport = (carKm * 4.33 * 0.21) + (flights * 500 / 12) + (publicTransport * 4.33 * 0.05);
-    const energy = (electricity * 0.5) + (heating * 2.3);
-    const food = (meatMeals * 4.33 * 3.3) + (dairy * 30 * 1.9);
-    const consumption = (shopping * 0.5) + (waste * 4.33 * 10);
+    const transport = carKm * 4.33 * 0.21 + (flights * 500) / 12 + publicTransport * 4.33 * 0.05;
+    const energy = electricity * 0.5 + heating * 2.3;
+    const food = meatMeals * 4.33 * 3.3 + dairy * 30 * 1.9;
+    const consumption = shopping * 0.5 + waste * 4.33 * 10;
 
     const total = Math.round(transport + energy + food + consumption);
 
@@ -83,48 +101,58 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
       energy: Math.round(energy),
       food: Math.round(food),
       consumption: Math.round(consumption),
-      inputs: { carKm, flights, publicTransport, electricity, heating, meatMeals, dairy, shopping, waste }
+      inputs: {
+        carKm,
+        flights,
+        publicTransport,
+        electricity,
+        heating,
+        meatMeals,
+        dairy,
+        shopping,
+        waste,
+      },
     };
   };
 
   // Generate recommendations using logic from index.html
   const generateRecommendations = (data) => {
     const newRecommendations = [];
-    
+
     // Basic recommendations based on highest emissions
     if (data.transport > 100) {
       newRecommendations.push({
         title: 'Use public transport or bike for short trips',
         difficulty: 'easy',
         co2Impact: Math.round(data.transport * 0.2),
-        icon: '🚲'
+        icon: '🚲',
       });
     }
-    
+
     if (data.energy > 80) {
       newRecommendations.push({
         title: 'Switch to LED bulbs and improve insulation',
         difficulty: 'medium',
         co2Impact: Math.round(data.energy * 0.15),
-        icon: '💡'
+        icon: '💡',
       });
     }
-    
+
     if (data.food > 120) {
       newRecommendations.push({
         title: 'Try meatless meals twice a week',
         difficulty: 'easy',
         co2Impact: Math.round(data.food * 0.25),
-        icon: '🥗'
+        icon: '🥗',
       });
     }
-    
+
     if (data.consumption > 50) {
       newRecommendations.push({
         title: 'Buy second-hand and reduce waste',
         difficulty: 'medium',
         co2Impact: Math.round(data.consumption * 0.3),
-        icon: '♻️'
+        icon: '♻️',
       });
     }
 
@@ -134,7 +162,7 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
         title: 'Consider carpooling or electric vehicle',
         difficulty: 'hard',
         co2Impact: Math.round(data.transport * 0.4),
-        icon: '🚗'
+        icon: '🚗',
       });
     }
 
@@ -142,8 +170,8 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
       newRecommendations.push({
         title: 'Reduce air travel or buy carbon offsets',
         difficulty: 'medium',
-        co2Impact: Math.round((flights - 2) * 500 / 12),
-        icon: '✈️'
+        co2Impact: Math.round(((flights - 2) * 500) / 12),
+        icon: '✈️',
       });
     }
 
@@ -152,16 +180,16 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
         title: 'Install solar panels or switch to green energy',
         difficulty: 'hard',
         co2Impact: Math.round(data.energy * 0.3),
-        icon: '☀️'
+        icon: '☀️',
       });
     }
 
     if (newRecommendations.length === 0) {
       newRecommendations.push({
-        title: 'Great job! You\'re already doing well!',
+        title: "Great job! You're already doing well!",
         difficulty: 'easy',
         co2Impact: 0,
-        icon: '🌱'
+        icon: '🌱',
       });
     }
 
@@ -182,7 +210,7 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
   };
 
   const getDifficultyClasses = (difficulty) => {
-    switch(difficulty) {
+    switch (difficulty) {
       case 'easy':
         return 'bg-green-100 text-green-700 border border-green-200';
       case 'medium':
@@ -198,14 +226,16 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-50 p-2">
-      <div className={`relative w-full max-w-6xl h-[96vh] flex flex-col rounded-2xl shadow-2xl border transition-all duration-300 ${isDarkMode ? 'bg-slate-900/95 border-slate-700 text-white' : 'bg-white/95 border-gray-200 text-gray-900'}`}>
+      <div
+        className={`relative w-full max-w-6xl h-[96vh] flex flex-col rounded-2xl shadow-2xl border transition-all duration-300 ${isDarkMode ? 'bg-slate-900/95 border-slate-700 text-white' : 'bg-white/95 border-gray-200 text-gray-900'}`}
+      >
         {/* Header */}
         <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200/20 backdrop-blur-lg">
           <div className="flex items-center">
             <Calculator className="w-5 h-5 mr-2 text-blue-400" />
             <h2 className="text-lg font-bold">🌱 Carbon Assessment</h2>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDarkMode ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}
           >
@@ -216,38 +246,56 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
         <div className="flex-1 overflow-y-auto p-4">
           {/* Results Display - Compact version */}
           {currentAssessment && (
-            <div className={`p-4 rounded-xl mb-4 ${isDarkMode ? 'bg-slate-800/50' : 'bg-gradient-to-br from-yellow-50 to-orange-50'}`}>
+            <div
+              className={`p-4 rounded-xl mb-4 ${isDarkMode ? 'bg-slate-800/50' : 'bg-gradient-to-br from-yellow-50 to-orange-50'}`}
+            >
               <div className="flex items-center justify-between mb-3">
                 <div className={`text-2xl font-bold ${getFootprintColor(currentAssessment.total)}`}>
                   {currentAssessment.total} kg CO₂/month
                 </div>
-                <div className={`text-sm font-medium ${currentAssessment.total < 500 ? 'text-green-600' : currentAssessment.total < 1000 ? 'text-yellow-600' : 'text-red-600'}`}>
-                  {currentAssessment.total < 500 ? '🌱 Excellent!' :
-                   currentAssessment.total < 1000 ? '🟡 Good progress' : 
-                   '🔴 Room to improve'}
+                <div
+                  className={`text-sm font-medium ${currentAssessment.total < 500 ? 'text-green-600' : currentAssessment.total < 1000 ? 'text-yellow-600' : 'text-red-600'}`}
+                >
+                  {currentAssessment.total < 500
+                    ? '🌱 Excellent!'
+                    : currentAssessment.total < 1000
+                      ? '🟡 Good progress'
+                      : '🔴 Room to improve'}
                 </div>
               </div>
-              
+
               {/* Compact Breakdown */}
               <div className="grid grid-cols-4 gap-2">
-                <div className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}>
+                <div
+                  className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}
+                >
                   <Car className="w-4 h-4 mx-auto mb-1 text-blue-400" />
-                  <div className="text-sm font-bold text-blue-400">{currentAssessment.transport}</div>
+                  <div className="text-sm font-bold text-blue-400">
+                    {currentAssessment.transport}
+                  </div>
                   <div className="text-xs opacity-70">Transport</div>
                 </div>
-                <div className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}>
+                <div
+                  className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}
+                >
                   <Home className="w-4 h-4 mx-auto mb-1 text-green-400" />
                   <div className="text-sm font-bold text-green-400">{currentAssessment.energy}</div>
                   <div className="text-xs opacity-70">Energy</div>
                 </div>
-                <div className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}>
+                <div
+                  className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}
+                >
                   <Leaf className="w-4 h-4 mx-auto mb-1 text-orange-400" />
                   <div className="text-sm font-bold text-orange-400">{currentAssessment.food}</div>
                   <div className="text-xs opacity-70">Food</div>
                 </div>
-                <div className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}>
+                <div
+                  className={`p-2 rounded-lg text-center ${isDarkMode ? 'bg-slate-700/50' : 'bg-white/70'}`}
+                >
                   <ShoppingBag className="w-4 h-4 mx-auto mb-1 text-purple-400" />
-                  <div className="text-sm font-bold text-purple-400">{currentAssessment.consumption}</div>
+                  <div className="text-sm font-bold text-purple-400">
+                    {currentAssessment.consumption}
+                  </div>
                   <div className="text-xs opacity-70">Shopping</div>
                 </div>
               </div>
@@ -263,7 +311,7 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
                   <Car className="w-5 h-5 mr-2" />
                   🚗 Transportation
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">
@@ -310,12 +358,14 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
               </div>
 
               {/* Home Energy */}
-              <div className={`p-4 rounded-xl ${isDarkMode ? 'bg-slate-800/30' : 'bg-green-50/50'}`}>
+              <div
+                className={`p-4 rounded-xl ${isDarkMode ? 'bg-slate-800/30' : 'bg-green-50/50'}`}
+              >
                 <h3 className="font-semibold mb-4 flex items-center text-green-400">
                   <Home className="w-5 h-5 mr-2" />
                   🏠 Home Energy
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">
@@ -348,12 +398,14 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
               </div>
 
               {/* Food & Diet */}
-              <div className={`p-4 rounded-xl ${isDarkMode ? 'bg-slate-800/30' : 'bg-orange-50/50'}`}>
+              <div
+                className={`p-4 rounded-xl ${isDarkMode ? 'bg-slate-800/30' : 'bg-orange-50/50'}`}
+              >
                 <h3 className="font-semibold mb-4 flex items-center text-orange-400">
                   <Leaf className="w-5 h-5 mr-2" />
                   🍽️ Food & Diet
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">
@@ -386,12 +438,14 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
               </div>
 
               {/* Consumption */}
-              <div className={`p-4 rounded-xl ${isDarkMode ? 'bg-slate-800/30' : 'bg-purple-50/50'}`}>
+              <div
+                className={`p-4 rounded-xl ${isDarkMode ? 'bg-slate-800/30' : 'bg-purple-50/50'}`}
+              >
                 <h3 className="font-semibold mb-4 flex items-center text-purple-400">
                   <ShoppingBag className="w-5 h-5 mr-2" />
                   🛍️ Consumption
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">
@@ -426,15 +480,17 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
 
             {/* Recommendations & Facts */}
             <div className="space-y-4 h-full flex flex-col">
-              <div className={`p-3 rounded-xl flex-1 flex flex-col ${isDarkMode ? 'bg-slate-800/30' : 'bg-green-50/50'}`}>
+              <div
+                className={`p-3 rounded-xl flex-1 flex flex-col ${isDarkMode ? 'bg-slate-800/30' : 'bg-green-50/50'}`}
+              >
                 <h3 className="font-semibold mb-3 flex items-center text-green-400 text-sm">
                   <Target className="w-4 h-4 mr-2" />
                   💡 Your Personalized Action Plan
                 </h3>
-                
+
                 <div className="space-y-2 flex-1 overflow-y-auto">
                   {recommendations.map((rec, index) => (
-                    <div 
+                    <div
                       key={index}
                       className={`p-3 rounded-lg border transition-all duration-300 hover:scale-105 ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}
                     >
@@ -448,7 +504,9 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
                                 Save {rec.co2Impact} kg CO₂/month
                               </span>
                             )}
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses(rec.difficulty)}`}>
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses(rec.difficulty)}`}
+                            >
                               {rec.difficulty.toUpperCase()}
                             </span>
                           </div>
@@ -456,18 +514,24 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
                       </div>
                     </div>
                   ))}
-                  
+
                   {/* Additional helpful tips to fill space */}
-                  <div className={`p-3 rounded-lg border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}>
+                  <div
+                    className={`p-3 rounded-lg border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}
+                  >
                     <div className="flex items-start gap-3">
                       <div className="text-lg">🌱</div>
                       <div className="flex-1">
-                        <div className="font-medium mb-1 text-sm">Track your progress regularly</div>
+                        <div className="font-medium mb-1 text-sm">
+                          Track your progress regularly
+                        </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-blue-600 text-xs font-medium">
                             Maintain awareness
                           </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses('easy')}`}>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses('easy')}`}
+                          >
                             EASY
                           </span>
                         </div>
@@ -475,16 +539,22 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
                     </div>
                   </div>
 
-                  <div className={`p-3 rounded-lg border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}>
+                  <div
+                    className={`p-3 rounded-lg border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}
+                  >
                     <div className="flex items-start gap-3">
                       <div className="text-lg">👥</div>
                       <div className="flex-1">
-                        <div className="font-medium mb-1 text-sm">Share tips with family and friends</div>
+                        <div className="font-medium mb-1 text-sm">
+                          Share tips with family and friends
+                        </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-purple-600 text-xs font-medium">
                             Multiply impact
                           </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses('easy')}`}>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses('easy')}`}
+                          >
                             EASY
                           </span>
                         </div>
@@ -492,16 +562,22 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
                     </div>
                   </div>
 
-                  <div className={`p-3 rounded-lg border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}>
+                  <div
+                    className={`p-3 rounded-lg border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-white/70 border-gray-200'}`}
+                  >
                     <div className="flex items-start gap-3">
                       <div className="text-lg">💰</div>
                       <div className="flex-1">
-                        <div className="font-medium mb-1 text-sm">Calculate cost savings from efficiency</div>
+                        <div className="font-medium mb-1 text-sm">
+                          Calculate cost savings from efficiency
+                        </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-green-600 text-xs font-medium">
                             Save money + planet
                           </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses('medium')}`}>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyClasses('medium')}`}
+                          >
                             MEDIUM
                           </span>
                         </div>
@@ -518,13 +594,27 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
                   📊 Quick Facts & Targets
                 </h3>
                 <ul className="text-xs space-y-1 opacity-80">
-                  <li>• <strong>Global average:</strong> ~1,000 kg CO₂/month</li>
-                  <li>• <strong>Paris target:</strong> {'<'}500 kg by 2030</li>
-                  <li>• <strong>Transport:</strong> ~29% of total emissions</li>
-                  <li>• <strong>Diet impact:</strong> 10-25% reduction possible</li>
-                  <li>• <strong>Energy efficiency:</strong> 15-30% savings</li>
-                  <li>• <strong>Best performers:</strong> Sweden ~300 kg/month</li>
-                  <li>• <strong>High emitters:</strong> Qatar &gt;3,000 kg/month</li>
+                  <li>
+                    • <strong>Global average:</strong> ~1,000 kg CO₂/month
+                  </li>
+                  <li>
+                    • <strong>Paris target:</strong> {'<'}500 kg by 2030
+                  </li>
+                  <li>
+                    • <strong>Transport:</strong> ~29% of total emissions
+                  </li>
+                  <li>
+                    • <strong>Diet impact:</strong> 10-25% reduction possible
+                  </li>
+                  <li>
+                    • <strong>Energy efficiency:</strong> 15-30% savings
+                  </li>
+                  <li>
+                    • <strong>Best performers:</strong> Sweden ~300 kg/month
+                  </li>
+                  <li>
+                    • <strong>High emitters:</strong> Qatar &gt;3,000 kg/month
+                  </li>
                 </ul>
               </div>
             </div>
@@ -532,7 +622,9 @@ const CarbonCalculatorModal = ({ isOpen, onClose, isDarkMode }) => {
         </div>
 
         {/* Footer */}
-        <div className={`flex-shrink-0 p-3 border-t border-gray-200/20 backdrop-blur-lg ${isDarkMode ? 'bg-slate-900/95' : 'bg-white/95'}`}>
+        <div
+          className={`flex-shrink-0 p-3 border-t border-gray-200/20 backdrop-blur-lg ${isDarkMode ? 'bg-slate-900/95' : 'bg-white/95'}`}
+        >
           <div className="flex justify-center">
             <button
               onClick={onClose}

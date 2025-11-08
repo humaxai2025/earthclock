@@ -4,6 +4,29 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    // Status colors for dynamic classes
+    'text-red-400',
+    'text-red-500',
+    'text-yellow-400',
+    'text-yellow-500',
+    'text-green-400',
+    'text-green-500',
+    'text-blue-400',
+    'text-blue-500',
+    'bg-red-400',
+    'bg-red-500',
+    'bg-yellow-400',
+    'bg-yellow-500',
+    'bg-green-400',
+    'bg-green-500',
+    'bg-blue-400',
+    'bg-blue-500',
+    'border-red-400',
+    'border-yellow-400',
+    'border-green-400',
+    'border-blue-400',
+  ],
   theme: {
     extend: {
       animation: {

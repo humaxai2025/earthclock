@@ -1,8 +1,19 @@
 import React from 'react';
 import { Leaf, Wind, Sun, Thermometer, Droplets, Waves, Activity } from 'lucide-react';
 
-const EnvironmentalDataCard = ({ icon: Icon, title, value, unit, type, getStatusColor, getStatusIcon, isDarkMode, delay, onMetricClick }) => (
-  <div 
+const EnvironmentalDataCard = ({
+  icon: Icon,
+  title,
+  value,
+  unit,
+  type,
+  getStatusColor,
+  getStatusIcon,
+  isDarkMode,
+  delay,
+  onMetricClick,
+}) => (
+  <div
     className={`group p-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer ${
       isDarkMode ? 'hover:bg-white/5' : 'hover:bg-white/30'
     }`}
@@ -13,12 +24,17 @@ const EnvironmentalDataCard = ({ icon: Icon, title, value, unit, type, getStatus
       {title}
       <div className="ml-auto">{getStatusIcon(type, value)}</div>
     </div>
-    <div className={`text-xl font-bold transition-all duration-300 group-hover:scale-110 ${getStatusColor(value, type)}`}>
-      {value}{unit}
+    <div
+      className={`text-xl font-bold transition-all duration-300 group-hover:scale-110 ${getStatusColor(value, type)}`}
+    >
+      {value}
+      {unit}
     </div>
     <div className="w-full bg-gray-200 rounded-full h-1 mt-2 overflow-hidden">
-      <div className={`h-1 rounded-full transition-all duration-1000 ${getStatusColor(value, type).replace('text-', 'bg-')}`} 
-           style={{width: `${Math.min(value * 2, 90)}%`, animation: `slideIn ${delay}s ease-out`}} />
+      <div
+        className={`h-1 rounded-full transition-all duration-1000 ${getStatusColor(value, type).replace('text-', 'bg-')}`}
+        style={{ width: `${Math.min(value * 2, 90)}%`, animation: `slideIn ${delay}s ease-out` }}
+      />
     </div>
     <div className="text-xs text-center mt-1 opacity-50 group-hover:opacity-80 transition-opacity">
       Click for details
@@ -26,8 +42,17 @@ const EnvironmentalDataCard = ({ icon: Icon, title, value, unit, type, getStatus
   </div>
 );
 
-const SimpleDataCard = ({ title, value, unit, color, isDarkMode, delay, metricType, onMetricClick }) => (
-  <div 
+const SimpleDataCard = ({
+  title,
+  value,
+  unit,
+  color,
+  isDarkMode,
+  delay,
+  metricType,
+  onMetricClick,
+}) => (
+  <div
     className={`group p-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer ${
       isDarkMode ? 'hover:bg-white/5' : 'hover:bg-white/30'
     }`}
@@ -37,12 +62,17 @@ const SimpleDataCard = ({ title, value, unit, color, isDarkMode, delay, metricTy
       <div className={`w-3 h-3 mr-1 rounded-full bg-${color}-400 animate-pulse`} />
       {title}
     </div>
-    <div className={`text-xl font-bold text-${color}-400 transition-all duration-300 group-hover:scale-110`}>
-      {value}{unit}
+    <div
+      className={`text-xl font-bold text-${color}-400 transition-all duration-300 group-hover:scale-110`}
+    >
+      {value}
+      {unit}
     </div>
     <div className="w-full bg-gray-200 rounded-full h-1 mt-2 overflow-hidden">
-      <div className={`bg-${color}-400 h-1 rounded-full transition-all duration-1000`} 
-           style={{width: '80%', animation: `slideIn ${delay}s ease-out`}} />
+      <div
+        className={`bg-${color}-400 h-1 rounded-full transition-all duration-1000`}
+        style={{ width: '80%', animation: `slideIn ${delay}s ease-out` }}
+      />
     </div>
     <div className="text-xs text-center mt-1 opacity-50 group-hover:opacity-80 transition-opacity">
       Click for details
@@ -50,25 +80,38 @@ const SimpleDataCard = ({ title, value, unit, color, isDarkMode, delay, metricTy
   </div>
 );
 
-const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIcon, isDarkMode, loading, onMetricClick }) => (
-  <div className={`h-full p-6 rounded-3xl backdrop-blur-xl shadow-2xl border transition-all duration-700 hover:scale-[1.02] ${
-    isDarkMode 
-      ? 'bg-gradient-to-br from-white/5 to-white/10 border-white/20 text-white' 
-      : 'bg-gradient-to-br from-white/70 to-white/90 border-white/50 text-gray-800'
-  }`}>
-    <h2 className={`text-xl font-bold mb-6 flex items-center ${
-      isDarkMode ? 'text-emerald-300' : 'text-emerald-700'
-    }`}>
+const EnvironmentalDataGrid = ({
+  environmentalData,
+  getStatusColor,
+  getStatusIcon,
+  isDarkMode,
+  loading,
+  onMetricClick,
+}) => (
+  <div
+    className={`h-full p-6 rounded-3xl backdrop-blur-xl shadow-2xl border transition-all duration-700 hover:scale-[1.02] ${
+      isDarkMode
+        ? 'bg-gradient-to-br from-white/5 to-white/10 border-white/20 text-white'
+        : 'bg-gradient-to-br from-white/70 to-white/90 border-white/50 text-gray-800'
+    }`}
+  >
+    <h2
+      className={`text-xl font-bold mb-6 flex items-center ${
+        isDarkMode ? 'text-emerald-300' : 'text-emerald-700'
+      }`}
+    >
       <Leaf className="w-6 h-6 mr-2" />
       Planet Vital Signs
-      <div className={`ml-auto w-3 h-3 rounded-full animate-pulse ${
-        environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
-      }`} />
+      <div
+        className={`ml-auto w-3 h-3 rounded-full animate-pulse ${
+          environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
+        }`}
+      />
     </h2>
-    
+
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <EnvironmentalDataCard 
+        <EnvironmentalDataCard
           icon={Wind}
           title="CO₂ Level"
           value={environmentalData.co2}
@@ -80,7 +123,7 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
           delay={1.5}
           onMetricClick={onMetricClick}
         />
-        <EnvironmentalDataCard 
+        <EnvironmentalDataCard
           icon={Sun}
           title="Clean Energy"
           value={environmentalData.renewableEnergy}
@@ -95,7 +138,7 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <EnvironmentalDataCard 
+        <EnvironmentalDataCard
           icon={Thermometer}
           title="Temperature"
           value={`+${environmentalData.temperature}`}
@@ -107,9 +150,9 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
           delay={2.1}
           onMetricClick={onMetricClick}
         />
-        <SimpleDataCard 
+        <SimpleDataCard
           title="Trees Lost"
-          value={(environmentalData.deforestation/1000).toFixed(0)}
+          value={(environmentalData.deforestation / 1000).toFixed(0)}
           unit="k"
           color="orange"
           isDarkMode={isDarkMode}
@@ -120,7 +163,7 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <EnvironmentalDataCard 
+        <EnvironmentalDataCard
           icon={Droplets}
           title="Arctic Ice"
           value={environmentalData.arcticIce}
@@ -132,7 +175,7 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
           delay={2.7}
           onMetricClick={onMetricClick}
         />
-        <SimpleDataCard 
+        <SimpleDataCard
           title="Ocean Plastic"
           value={environmentalData.oceanPlastic}
           unit="M t/yr"
@@ -145,7 +188,7 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <EnvironmentalDataCard 
+        <EnvironmentalDataCard
           icon={Waves}
           title="Sea Level"
           value={`+${environmentalData.seaLevel}`}
@@ -157,7 +200,7 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
           delay={3.3}
           onMetricClick={onMetricClick}
         />
-        <EnvironmentalDataCard 
+        <EnvironmentalDataCard
           icon={Activity}
           title="Wildlife"
           value={environmentalData.biodiversity}
@@ -173,28 +216,39 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
 
       {/* Enhanced Real-time Data Status */}
       <div className="flex justify-center mt-4">
-        <div className={`flex items-center space-x-2 px-4 py-2 rounded-full backdrop-blur-lg border transition-all duration-300 ${
-          environmentalData.isRealTime 
-            ? isDarkMode ? 'bg-emerald-900/20 border-emerald-500/30 text-emerald-300' : 'bg-emerald-100/50 border-emerald-200/50 text-emerald-700'
-            : isDarkMode ? 'bg-yellow-900/20 border-yellow-500/30 text-yellow-300' : 'bg-yellow-100/50 border-yellow-200/50 text-yellow-700'
-        }`}>
+        <div
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full backdrop-blur-lg border transition-all duration-300 ${
+            environmentalData.isRealTime
+              ? isDarkMode
+                ? 'bg-emerald-900/20 border-emerald-500/30 text-emerald-300'
+                : 'bg-emerald-100/50 border-emerald-200/50 text-emerald-700'
+              : isDarkMode
+                ? 'bg-yellow-900/20 border-yellow-500/30 text-yellow-300'
+                : 'bg-yellow-100/50 border-yellow-200/50 text-yellow-700'
+          }`}
+        >
           <div className="relative">
-            <div className={`w-2 h-2 rounded-full animate-ping absolute ${
-              environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
-            }`} />
-            <div className={`w-2 h-2 rounded-full ${
-              environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
-            }`} />
+            <div
+              className={`w-2 h-2 rounded-full animate-ping absolute ${
+                environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
+              }`}
+            />
+            <div
+              className={`w-2 h-2 rounded-full ${
+                environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
+              }`}
+            />
           </div>
-          <div className="text-xs opacity-60 font-bold">
-  Data Updated Monthly
-</div>
+          <div className="text-xs opacity-60 font-bold">Data Updated Monthly</div>
           <div className="flex space-x-1">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className={`w-1 h-1 rounded-full animate-bounce ${
-                environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
-              }`} 
-                   style={{animationDelay: `${i * 0.1}s`}} />
+              <div
+                key={i}
+                className={`w-1 h-1 rounded-full animate-bounce ${
+                  environmentalData.isRealTime ? 'bg-emerald-400' : 'bg-yellow-400'
+                }`}
+                style={{ animationDelay: `${i * 0.1}s` }}
+              />
             ))}
           </div>
           {loading && (
@@ -204,7 +258,6 @@ const EnvironmentalDataGrid = ({ environmentalData, getStatusColor, getStatusIco
           )}
         </div>
       </div>
-      
     </div>
   </div>
 );

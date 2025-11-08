@@ -10,7 +10,9 @@ const Header = ({ isDarkMode, setIsDarkMode, pulseAnimation }) => {
           <Globe className={`w-8 h-8 ${isDarkMode ? 'text-cyan-400' : 'text-emerald-500'}`} />
           {pulseAnimation && (
             <div className="absolute inset-0 rounded-full animate-ping">
-              <Globe className={`w-8 h-8 ${isDarkMode ? 'text-cyan-400' : 'text-emerald-500'} opacity-75`} />
+              <Globe
+                className={`w-8 h-8 ${isDarkMode ? 'text-cyan-400' : 'text-emerald-500'} opacity-75`}
+              />
             </div>
           )}
         </div>
@@ -35,11 +37,7 @@ const Header = ({ isDarkMode, setIsDarkMode, pulseAnimation }) => {
           }`}
           title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          {isDarkMode ? (
-            <Sun className="w-5 h-5" />
-          ) : (
-            <Moon className="w-5 h-5" />
-          )}
+          {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </button>
       </div>
     </header>

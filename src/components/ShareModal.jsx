@@ -1,22 +1,28 @@
 import React from 'react';
 
-const ShareModal = ({ showShareModal, setShowShareModal, shareToSocial, copyToClipboard, isDarkMode }) => {
+const ShareModal = ({
+  showShareModal,
+  setShowShareModal,
+  shareToSocial,
+  copyToClipboard,
+  isDarkMode,
+}) => {
   if (!showShareModal) return null;
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className={`max-w-md w-full rounded-3xl p-8 shadow-2xl border ${
-        isDarkMode 
-          ? 'bg-gradient-to-br from-gray-800/90 to-gray-900/90 border-gray-700/50 text-white' 
-          : 'bg-gradient-to-br from-white/90 to-gray-50/90 border-gray-200/50 text-gray-800'
-      }`}>
-        <h3 className="text-2xl font-bold mb-4 flex items-center">
-          🌍 Share Your Climate Impact
-        </h3>
+      <div
+        className={`max-w-md w-full rounded-3xl p-8 shadow-2xl border ${
+          isDarkMode
+            ? 'bg-gradient-to-br from-gray-800/90 to-gray-900/90 border-gray-700/50 text-white'
+            : 'bg-gradient-to-br from-white/90 to-gray-50/90 border-gray-200/50 text-gray-800'
+        }`}
+      >
+        <h3 className="text-2xl font-bold mb-4 flex items-center">🌍 Share Your Climate Impact</h3>
         <p className="text-sm opacity-80 mb-6">
           Help spread awareness about our planet's current state and inspire others to take action!
         </p>
-        
+
         <div className="grid grid-cols-2 gap-3 mb-6">
           <button
             onClick={() => shareToSocial('twitter')}
@@ -43,18 +49,18 @@ const ShareModal = ({ showShareModal, setShowShareModal, shareToSocial, copyToCl
             💬 WhatsApp
           </button>
         </div>
-        
+
         <button
           onClick={copyToClipboard}
           className={`w-full p-4 rounded-xl mb-4 transition-all duration-300 hover:scale-105 shadow-lg ${
-            isDarkMode 
-              ? 'bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 text-white' 
+            isDarkMode
+              ? 'bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 text-white'
               : 'bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800'
           }`}
         >
           📋 Copy Data to Clipboard
         </button>
-        
+
         <button
           onClick={() => setShowShareModal(false)}
           className="w-full p-4 rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white transition-all duration-300 hover:scale-105 shadow-lg"

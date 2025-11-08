@@ -4,26 +4,26 @@ import { Leaf } from 'lucide-react';
 const EcoTip = ({ isDarkMode }) => {
   // 20 Hardcoded Earth Wisdom Tips
   const earthWisdomTips = [
-    "🌱 Every small action creates ripples of positive change across our planet",
+    '🌱 Every small action creates ripples of positive change across our planet',
     "🌍 The Earth doesn't belong to us; we belong to the Earth - Chief Seattle",
     "💧 Water is life's matter and matrix, mother and medium. There is no life without water",
-    "🌳 Trees are poems that the earth writes upon the sky - Kahlil Gibran", 
-    "🦋 In every walk with nature, one receives far more than they seek",
-    "⚡ The sun provides more energy to Earth in one hour than humanity uses in a year",
+    '🌳 Trees are poems that the earth writes upon the sky - Kahlil Gibran',
+    '🦋 In every walk with nature, one receives far more than they seek',
+    '⚡ The sun provides more energy to Earth in one hour than humanity uses in a year',
     "🌊 Oceans cover 71% of Earth's surface and produce over 50% of our oxygen",
-    "🍃 A single tree can absorb 48 pounds of CO₂ per year and produce oxygen for two people",
-    "🌺 Biodiversity is the key to ecosystem resilience and planetary health",
-    "🌙 We do not inherit the Earth from our ancestors; we borrow it from our children",
-    "🌿 Nature is not a place to visit. It is our home - Gary Snyder",
-    "🌸 The earth is what we all have in common - Wendell Berry",
-    "🦅 Look deep into nature, and then you will understand everything better - Einstein",
-    "🌾 Soil is not renewable in a human timescale - protect this precious resource",
+    '🍃 A single tree can absorb 48 pounds of CO₂ per year and produce oxygen for two people',
+    '🌺 Biodiversity is the key to ecosystem resilience and planetary health',
+    '🌙 We do not inherit the Earth from our ancestors; we borrow it from our children',
+    '🌿 Nature is not a place to visit. It is our home - Gary Snyder',
+    '🌸 The earth is what we all have in common - Wendell Berry',
+    '🦅 Look deep into nature, and then you will understand everything better - Einstein',
+    '🌾 Soil is not renewable in a human timescale - protect this precious resource',
     "❄️ Arctic ice reflects sunlight, helping to regulate Earth's temperature",
-    "🌋 Forests are the lungs of our planet, breathing life into the atmosphere",
-    "🌈 Climate action today determines the world we leave for tomorrow",
-    "🐝 Bees pollinate one-third of everything we eat - protect our pollinators",
-    "🌟 Renewable energy: infinite, clean, and increasingly affordable",
-    "🌏 Think globally, act locally - every choice matters for our shared future"
+    '🌋 Forests are the lungs of our planet, breathing life into the atmosphere',
+    '🌈 Climate action today determines the world we leave for tomorrow',
+    '🐝 Bees pollinate one-third of everything we eat - protect our pollinators',
+    '🌟 Renewable energy: infinite, clean, and increasingly affordable',
+    '🌏 Think globally, act locally - every choice matters for our shared future',
   ];
 
   // Tip rotation state
@@ -60,11 +60,13 @@ const EcoTip = ({ isDarkMode }) => {
   }, []);
 
   return (
-    <div className={`p-6 rounded-2xl backdrop-blur-xl shadow-xl border transition-all duration-1000 ${
-      isDarkMode 
-        ? 'bg-gradient-to-r from-emerald-900/40 to-cyan-900/40 border-emerald-500/30 text-emerald-100' 
-        : 'bg-gradient-to-r from-emerald-50/80 to-cyan-50/80 border-emerald-200/50 text-emerald-800'
-    }`}>
+    <div
+      className={`p-6 rounded-2xl backdrop-blur-xl shadow-xl border transition-all duration-1000 ${
+        isDarkMode
+          ? 'bg-gradient-to-r from-emerald-900/40 to-cyan-900/40 border-emerald-500/30 text-emerald-100'
+          : 'bg-gradient-to-r from-emerald-50/80 to-cyan-50/80 border-emerald-200/50 text-emerald-800'
+      }`}
+    >
       <h3 className="text-lg font-semibold mb-3 flex items-center">
         <Leaf className="w-5 h-5 animate-pulse mr-2" />
         Earth Wisdom
