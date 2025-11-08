@@ -13,6 +13,7 @@ import ClimateIntelligence from './components/ClimateIntelligence';
 import EcoTip from './components/EcoTip';
 import ActionCards from './components/ActionCards';
 import ActionButtons from './components/ActionButtons';
+import Footer from './components/Footer';
 
 // Lazy load modals for better performance
 const ShareModal = lazy(() => import('./components/ShareModal'));
@@ -437,6 +438,9 @@ function App() {
             isDarkMode={isDarkMode}
           />
         </div>
+
+        {/* Footer */}
+        <Footer isDarkMode={isDarkMode} />
       </div>
 
       {/* Modals - Lazy loaded with Suspense */}
